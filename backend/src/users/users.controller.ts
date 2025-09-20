@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './users.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
@@ -11,5 +11,24 @@ export class UserController {
   async getProfile(@Req() req) {
     const user = await this.userService.findByEmail(req.user.email);
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('update')
+  async updateUserProfile(
+    @Req() req,
+    @Body() body: { user?: string; password?: string },
+  ) {
+    return this.userService.updateUserProfile(req.user.userId, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('users')
+  async getAllUsers(@Req() req){
+    if(req.user.role !== 'admin'){
+      return { message: 'Unauthorized ❌ Only admin can fetch all users.' };
+    }
+
+    return this.userService.findAll();
   }
 }
