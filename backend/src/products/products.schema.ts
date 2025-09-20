@@ -8,6 +8,9 @@ export class Product {
   @Prop({ required: true })
   name: string;
 
+  @Prop({required: true})
+  categoryName: string;
+
   @Prop()
   description: string;
 
