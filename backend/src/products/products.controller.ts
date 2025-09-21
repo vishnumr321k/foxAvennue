@@ -1,9 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
+  ForbiddenException,
   Get,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -31,5 +34,31 @@ export class ProductsController {
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.productsService.findById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('product-update/:id')
+  async productUpdate(
+    @Param('id') id: string,
+    @Body() body: any,
+    @Req() req: any,
+  ) {
+    if (req.user.role !== 'admin') {
+      throw new ForbiddenException('Admin can only Change product Data...😎');
+    }
+
+    return this.productsService.productUpdate(id, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('product-delete/:id')
+  async deleteProduct(@Param('id') id: string, @Req() req: any) {
+    if (req.user.role !== 'admin') {
+      throw new ForbiddenException(
+        'Admin can only permition to delete the product...😏',
+      );
+    }
+
+    return this.productsService.productDelete(id);
   }
 }
