@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { mongooseConfig } from './config/mongoose.config';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
+import { OrderModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { CartModule } from './cart/cart.module';
     AuthModule,
     UserModule,
     ProductsModule,
-    CartModule
+    CartModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

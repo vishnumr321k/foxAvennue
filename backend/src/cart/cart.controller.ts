@@ -26,12 +26,16 @@ export class CartController {
       size?: string;
     },
   ) {
+
+    console.log(req.user.userId);
     return this.cartService.addToCart(
       req.user.userId,
       body.productId,
       body.quantity ?? 1,
       body.size,
     );
+
+    
   }
 
   @UseGuards(JwtAuthGuard)

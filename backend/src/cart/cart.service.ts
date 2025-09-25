@@ -15,6 +15,8 @@ export class CartService {
   ) {
     let cart = await this.cartModel.findOne({ userId });
 
+    console.log('Cart:', cart)
+
     if (!cart) {
       cart = new this.cartModel({ userId, items: [] });
     }
