@@ -39,7 +39,9 @@ export class OrderService {
     return newOrder;
   }
 
-  async getOrder(userId: string){
-    return this.orderModel.find({userId}).populate('items.productId', 'name, price, size images');
+  async getOrder(userId: string) {
+    return this.orderModel
+      .find({ userId })
+      .populate('items.productId', 'name, price, size images');
   }
 }

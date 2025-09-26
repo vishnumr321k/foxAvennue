@@ -31,7 +31,7 @@ export class Order {
   @Prop({ default: 'pending' })
   status: string;
 
-  @Prop({default: 'COD'})
+  @Prop({ default: 'COD' })
   paymentMethod: string;
 }
 
